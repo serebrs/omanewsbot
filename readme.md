@@ -1,3 +1,3 @@
 # Telegram чат-бот новостей Омской академии МВД России
 
-<https://t.me/OmaNewsBot>
+Доступен по адресу: <https://t.me/OmaNewsBot>
