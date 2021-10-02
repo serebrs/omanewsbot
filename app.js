@@ -7,7 +7,7 @@ const { pool } = require('./dbpool');
 
 
 const rssUrl = 'https://xn--80axf.xn--b1aew.xn--p1ai/Press-sluzhba/Novosti/rss';
-const weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=OMSK&appid=47331b7410d67cfc8dacf1232bfee9c3&lang=ru&units=metric';
+const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=OMSK&appid=${process.env.WEATHER_TOKEN}&lang=ru&units=metric`;
 
 let iconMap = new Map([
     ["01d", "🌞"], 
