@@ -8,4 +8,4 @@ exports.pool = mariadb.createPool({
     acquireTimeout: 1000
 });
 
-exports.poolHeroku = mariadb.createPool(process.env.CLEARDB_DATABASE_URL);
+exports.poolHeroku = mariadb.createPool(process.env.MARIA_CLEARDB);
