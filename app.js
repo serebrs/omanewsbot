@@ -67,8 +67,7 @@ const jobWeather = async function () {
 }
 
 taskNews = cron.scheduleJob('*/15 * * * *', jobNews);
-//taskWeather = cron.scheduleJob('*/60 9-19 * * *', jobWeather);
-taskWeather = cron.scheduleJob('*/30 * * * *', jobWeather); console.log(new Date().getHours());
+taskWeather = cron.scheduleJob('*/60 9-19 * * *', jobWeather);
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
