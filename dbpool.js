@@ -7,5 +7,6 @@ module.exports = {
         password: process.env.DB_PWD,
         database: process.env.DB_DB,
         acquireTimeout: 1000
-    })
+    }),
+    poolHeroku: mariadb.createPool(process.env.MARIA_CLEARDB)
 }

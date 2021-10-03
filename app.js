@@ -3,7 +3,7 @@ const { Telegraf } = require('telegraf');
 const axios = require('axios');
 const cron = require('node-schedule');
 const rssParser = require('rss-parser');
-const { pool } = require('./dbpool');
+const { pool, poolHeroku } = require('./dbpool');
 
 
 const rssUrl = 'https://xn--80axf.xn--b1aew.xn--p1ai/Press-sluzhba/Novosti/rss';
@@ -29,7 +29,8 @@ const jobNews = async function () {
     const parser = new rssParser({ timeout: 1000 });
     let conn;
     try {
-        conn = await pool.getConnection();
+        //conn = await pool.getConnection();
+        conn = await poolHeroku.getConnection();
         const feed = await parser.parseURL(rssUrl);
         let items = feed.items.slice(0, 5);
         items.reverse();
