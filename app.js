@@ -29,10 +29,8 @@ const jobNews = async function () {
     const parser = new rssParser({ timeout: 1000 });
     let conn;
     try {
-        if (process.env.DB_HOST) {
-            conn = await pool.getConnection();
-        }
-        else conn = await poolHeroku.getConnection();
+        //conn = await pool.getConnection();    // localhost ENV
+        conn = await poolHeroku.getConnection();    //Heroku ClearDB
         const feed = await parser.parseURL(rssUrl);
         let items = feed.items.slice(0, 5);
         items.reverse();
