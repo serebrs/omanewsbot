@@ -28,7 +28,13 @@ const jobNews = async function () {
     const parser = new rssParser({ timeout: 1000 });
     let conn;
     try {
-        conn = await mariadb.createConnection(process.env.MARIA_CLEARDB, {acquireTimeout: 1000});
+        conn = await mariadb.createConnection({
+            host: process.env.CLEARDB_HOST,
+            user: process.env.CLEARDB_USER,
+            password: process.env.CLEARDB_PWD,
+            database: process.env.CLEARDB_DB,
+            acquireTimeout: 1000
+        });
         const feed = await parser.parseURL(rssUrl);
         let items = feed.items.slice(0, 5);
         items.reverse();
