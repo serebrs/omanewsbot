@@ -13,17 +13,19 @@ exports.getNews = async function () {
         let items = feed.slice(0, 5);
         items.reverse();
         const [lastRead] = await conn.query("SELECT datetime FROM newsbot LIMIT 1");
-        const lastDatetime = lastRead?.datetime || 0;
-        let latestPubDate = 0;
+        const lastPubDateDB = lastRead?.datetime || 0;   //15-00
+        let latestPubDateRSS = 0;
         for (let item of items) {
             let pubDate = new Date(item.pubDate).getTime();
-            if (lastDatetime < pubDate) {
+            if (lastPubDateDB < pubDate) {
                 let str = `<b>Новости ОмА МВД России >> <a href="${item.link}">${item.title}</a></b>\n${item.summary || ''}\n<a href="${item.enclosures[0]?.url || ''}">&#8205;</a>`;
                 newsArr.push(str);
-            }
-            latestPubDate = Math.max(latestPubDate, pubDate);
+                latestPubDateRSS = Math.max(latestPubDateRSS, pubDate);
+            }            
         }
-        await conn.query("UPDATE newsbot SET datetime = ?", [latestPubDate]);
+        if (latestPubDateRSS > lastPubDateDB) {
+            await conn.query("UPDATE newsbot SET datetime = ?", [latestPubDateRSS]);
+        }
         return newsArr;
     }
     catch (err) {
