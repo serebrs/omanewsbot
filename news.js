@@ -18,7 +18,7 @@ exports.getNews = async function () {
         for (let item of items) {
             let pubDate = new Date(item.pubDate).getTime();
             if (lastPubDateDB < pubDate) {
-                let str = `<b>Новости ОмА МВД России >> <a href="${item.link}">${item.title}</a></b>\n${item.summary || ''}\n<a href="${item.enclosures[0]?.url || ''}">&#8205;</a>`;
+                let str = `<b>Новости ОмА МВД России >> <a href="${item.link}">${item.title}</a></b>\n${item.summary || ''}\n<a href="${item.enclosures[0]?.url}">&#8205;</a>`;
                 newsArr.push(str);
                 latestPubDateRSS = Math.max(latestPubDateRSS, pubDate);
             }            
