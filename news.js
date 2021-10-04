@@ -8,7 +8,7 @@ exports.getNews = async function () {
     let conn;
     try {
         let newsArr = [];
-        conn = await mariadb.createConnection(localConn);
+        conn = await mariadb.createConnection(herokuConn);
         const feed = await rssParser(rssUrl);
         let items = feed.slice(0, 5);
         items.reverse();
