@@ -8,6 +8,22 @@ const mariadb = require('mariadb');
 const rssUrl = 'https://xn--80axf.xn--b1aew.xn--p1ai/Press-sluzhba/Novosti/rss';
 const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=OMSK&appid=${process.env.WEATHER_TOKEN}&lang=ru&units=metric`;
 
+const localConn = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+    database: process.env.DB_DB,
+    acquireTimeout: 1000
+};
+
+const herokuConn = {
+    host: process.env.CLEARDB_HOST,
+    user: process.env.CLEARDB_USER,
+    password: process.env.CLEARDB_PWD,
+    database: process.env.CLEARDB_DB,
+    acquireTimeout: 1000
+};
+
 let iconMap = new Map([
     ["01d", "🌞"],
     ["02d", "🌤"],
@@ -28,13 +44,7 @@ const jobNews = async function () {
     const parser = new rssParser({ timeout: 1000 });
     let conn;
     try {
-        conn = await mariadb.createConnection({
-            host: process.env.CLEARDB_HOST,
-            user: process.env.CLEARDB_USER,
-            password: process.env.CLEARDB_PWD,
-            database: process.env.CLEARDB_DB,
-            acquireTimeout: 1000
-        });
+        conn = await mariadb.createConnection(herokuConn);
         const feed = await parser.parseURL(rssUrl);
         let items = feed.items.slice(0, 5);
         items.reverse();
