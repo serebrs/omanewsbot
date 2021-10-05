@@ -25,5 +25,6 @@ async function jobSend(funcGetData) {
     if (!data) return;
     for (let item of data) {
         await bot.telegram.sendMessage(chatId, item, { parse_mode: "HTML" });
+        await new Promise(res => setTimeout(res, 1500)); // задержка между отправками сообщений
     }
 }
